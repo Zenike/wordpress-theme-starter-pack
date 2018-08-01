@@ -1,4 +1,10 @@
 (function($) {
+// start of the autoinvoked function that defines $
+
+
+
+
+
 //fonction permettant de rafraichir les calculs du
 //formulaire dans un cas de création en ajax
 function formflex_refresh(){
@@ -7,89 +13,6 @@ function formflex_refresh(){
 		input: "",
 	});
 }
-
-
-
-
-
-
-
-//checkbox et radio personnalisé
-$(document).ready(function () {
-    checkbox_checking();
-});
-$(document).on("formflex_refresh", function(options){
-	checkbox_checking();
-});
-$(document).ready(function () {
-	$("body").on("change",".ffx-checkskin input",function () {
-		console.log("lklklk");
-	    checkbox_checking();
-	});
-});
-$("body").on("mousedown",".ffx-checkskin",function () {
-    if ($(this).find("input").prop('disabled') == false) {
-        $(this).addClass("ffx-checkskin--mousedown");
-    }
-})
-$("body").on("mouseup",function () {
-    $(".ffx-checkskin").removeClass("ffx-checkskin--mousedown");
-});
-function checkbox_checking() {
-    $(".ffx-checkskin input").each(function () {
-        if ($(this).is(":checked")) {
-			var checkskin =  $(this).parents(".ffx-checkskin");
-            checkskin.addClass("ffx-checkskin--checked");
-
-			//condition spéciale dans le cas d'une "star"
-			if(checkskin.is(".ffx-checkskin--icon") && checkskin.parent().is(".ffx-fieldset")){
-				checkskin.prevAll().addClass("ffx-checkskin--checked");
-			}
-        } else {
-            $(this).parents(".ffx-checkskin").removeClass("ffx-checkskin--checked");
-        }
-    });
-}//checkbox_checking
-
-
-
-
-
-
-
-
-
-
-
-
-
-//équilibrer les tailles de names dans les formulaires (alignement)
-$(document).ready(function () {
-    ffx_align_names();
-});
-$(document).on("formflex_refresh", function(options){
-	ffx_align_names();
-});
-function ffx_align_names() {
-    $(".ffx-align-names-container").each(function (k, v) {
-        var max_width = 0;
-
-        $(v).find("[data-ffx-align-names]").each(function () {
-			$(this).removeAttr("style");
-
-			if ($(this).actual('width') >= max_width) {
-                max_width = $(this).actual('width');
-            }
-        });
-
-        $(v).find("[data-ffx-align-names]").width(max_width);
-    });
-};
-
-
-
-
-
 
 
 
@@ -108,18 +31,18 @@ function ffx_align_names() {
 
 //form radio auto menu
 $(document).ready(function () {
-    radio_auto_menu();
+	radio_auto_menu();
 });
 $(document).on("formflex_refresh", function(options){
 	radio_auto_menu();
 });
 $('body').on('change', "[data-radio-auto-menu] input", function () {
-    if ($(this).is(":checked")) {
-        radio_auto_menu_target($(this).parents("[data-radio-auto-menu]"));
-    }
+	if ($(this).is(":checked")) {
+		radio_auto_menu_target($(this).parents("[data-radio-auto-menu]"));
+	}
 });
 function radio_auto_menu() {
-    $("[data-radio-auto-menu] input").each(function () {
+	$("[data-radio-auto-menu] input").each(function () {
 		var prechecked = $(this).parents(".ffx-fieldset").find("input:checked").length;
 
 		if (prechecked==1) {
@@ -131,18 +54,18 @@ function radio_auto_menu() {
 				radio_auto_menu_target($(this).parents(".ffx-fieldset").find(".uncheck_default"));
 			}
 		}
-    });
+	});
 };
 function radio_auto_menu_target(v) {
-    var target = $(v).attr("data-radio-auto-menu");
-    var no_targets = new Array();
+	var target = $(v).attr("data-radio-auto-menu");
+	var no_targets = new Array();
 
-    $(v).parents(".ffx-fieldset").find("[data-radio-auto-menu]").each(function () {
-        no_targets.push($(this).attr("data-radio-auto-menu"));
-    });
+	$(v).parents(".ffx-fieldset").find("[data-radio-auto-menu]").each(function () {
+		no_targets.push($(this).attr("data-radio-auto-menu"));
+	});
 
-    //cacher les lignes qui contiennent un mot clé
-    for (i = 0; i < no_targets.length; i++) {
+	//cacher les lignes qui contiennent un mot clé
+	for (i = 0; i < no_targets.length; i++) {
 		//met en tableau les items qui contiennent cet attribut
 		var item_notargets =  $("[data-target~=" + no_targets[i] + "]");
 
@@ -151,9 +74,9 @@ function radio_auto_menu_target(v) {
 			$(this).not(".no_disabled").find("input,select,textarea").attr("disabled","disabled");
 			$(this).filter(".empty_input").find("input,select,textarea").val("");
 		});
-    }
+	}
 
-    //afficher grace au mot clé du radio checked
+	//afficher grace au mot clé du radio checked
 	var item_target =  $("[data-target~=" + target + "]");
 	$(item_target).show();
 	$(item_target).find("input,select,textarea").removeAttr("disabled");
@@ -171,7 +94,7 @@ function radio_auto_menu_target(v) {
 
 //form checkbox auto menu
 $(document).ready(function () {
-    checkbox_auto_menu();
+	checkbox_auto_menu();
 });
 $(document).on("formflex_refresh", function(options){
 	checkbox_auto_menu();
@@ -185,17 +108,17 @@ $('body').on('change', "[data-checkbox-auto-menu] input", function () {
 });
 
 function checkbox_auto_menu() {
-    $("[data-checkbox-auto-menu] input").each(function () {
+	$("[data-checkbox-auto-menu] input").each(function () {
 		if ($(this).is(":checked")) {
 			checkbox_auto_menu_target($(this).parents("[data-checkbox-auto-menu]"),"-yes");
 		}else{
 			checkbox_auto_menu_target($(this).parents("[data-checkbox-auto-menu]"),"-no");
 		}
-    });
+	});
 };
 
 function checkbox_auto_menu_target(v,state) {
-    var target = $(v).attr("data-checkbox-auto-menu");
+	var target = $(v).attr("data-checkbox-auto-menu");
 
 	$("[data-target=" + target + "-yes]").hide();
 	$("[data-target=" + target + "-no]").hide();
@@ -222,7 +145,7 @@ function checkbox_auto_menu_target(v,state) {
 
 //form select auto menu
 $(document).ready(function () {
-    select_auto_menu();
+	select_auto_menu();
 });
 $(document).on("formflex_refresh", function(options){
 	select_auto_menu();
@@ -231,19 +154,19 @@ $('body').on('change', "[data-ffx-select-automenu]", function () {
 	select_auto_menu_target($(this),$(this).find("option:checked"));
 });
 function select_auto_menu() {
-    $("[data-ffx-select-automenu]").each(function () {
+	$("[data-ffx-select-automenu]").each(function () {
 		select_auto_menu_target($(this),$(this).find("option:checked"));
-    });
+	});
 };
 function select_auto_menu_target(v,w) {
-    var target = $(v).attr("data-ffx-select-automenu")+"-"+$(w).attr("data-key");
-    var no_targets = new Array();
-    $(v).find("option").each(function () {
-        no_targets.push($(v).attr("data-ffx-select-automenu")+"-"+$(this).attr("data-key"));
-    });
+	var target = $(v).attr("data-ffx-select-automenu")+"-"+$(w).attr("data-key");
+	var no_targets = new Array();
+	$(v).find("option").each(function () {
+		no_targets.push($(v).attr("data-ffx-select-automenu")+"-"+$(this).attr("data-key"));
+	});
 
-    //cacher les lignes qui contiennent un mot clé
-    for (i = 0; i < no_targets.length; i++) {
+	//cacher les lignes qui contiennent un mot clé
+	for (i = 0; i < no_targets.length; i++) {
 		//met en tableau les items qui contiennent cet attribut
 		var item_notargets =  $("[data-ffx-select-target~=" + no_targets[i] + "]");
 
@@ -252,9 +175,9 @@ function select_auto_menu_target(v,w) {
 			$(this).not(".no_disabled").find("input,select,textarea").attr("disabled","disabled");
 			$(this).filter(".empty_input").find("input,select,textarea").val("");
 		});
-    }
+	}
 
-    //afficher grace au mot clé du radio checked
+	//afficher grace au mot clé du radio checked
 	var item_target =  $("[data-ffx-select-target~=" + target + "]");
 	$(item_target).show();
 	$(item_target).find("input,select,textarea").removeAttr("disabled");
@@ -283,7 +206,7 @@ function select_auto_menu_target(v,w) {
 //form lang menu
 // lancer la fonction langue globale qui parcourt TOUT
 $(document).ready(function () {
-    lang_menu();
+	lang_menu();
 });
 $(document).on("formflex_refresh", function(options){
 	lang_menu();
@@ -294,7 +217,7 @@ $('body').on('click', "[data-lang-menu] [data-lang]", function () {
 });
 // fonction globale qui lance tous les menus au chargement
 function lang_menu() {
-    $("[data-lang-menu] [data-lang]").each(function () {
+	$("[data-lang-menu] [data-lang]").each(function () {
 		//trouver le bouton de langue enfoncé apr defaut (si y en a un)
 		var preselected = $(this).parents("[data-lang-menu]").find("[data-lang].selected").length;
 
@@ -307,7 +230,7 @@ function lang_menu() {
 			var first_button = $(this).parents("[data-lang-menu]").find("[data-lang]:first");
 			lang_menu_target(first_button);
 		}
-    });
+	});
 };
 //fonction generale (l'attribut est l'ID de la langue)
 function lang_menu_target(v) {
@@ -316,7 +239,7 @@ function lang_menu_target(v) {
 	//stocker la langue (sous forme de numero souvent)
 	var target_extension = $(v).attr("data-lang");
 	//créer l'id des éléments à matcher en combinant l'id et la langue à afficher
-    var target = target_general+"-"+target_extension;
+	var target = target_general+"-"+target_extension;
 
 	//gerer le menu en lui meme (selected etc)
 	$(v).parents("[data-lang-menu]").find("[data-lang]").removeClass("selected");
@@ -325,7 +248,7 @@ function lang_menu_target(v) {
 	//cacher tous les éléments liés à cet ID langue
 	$("[data-lang-category=" + target_general + "]").hide();
 
-    //afficher grace au mot clé de l'onglet sélectionné
+	//afficher grace au mot clé de l'onglet sélectionné
 	$("[data-lang-target~=" + target + "]").show();
 }//form lang menu
 
@@ -348,17 +271,17 @@ function lang_menu_target(v) {
 // SAVING INPUT NAME
 //sauvegarder la valeur d'une checkbox non-cliquée en créant dynamiquement un input hidden
 $(document).ready(function () {
-    $("input[data-uncheck-safe]").each(function () {
-        uncheck_safe($(this));
-    });
+	$("input[data-uncheck-safe]").each(function () {
+		uncheck_safe($(this));
+	});
 });
 $(document).on("formflex_refresh", function(options){
-    $("input[data-uncheck-safe]").each(function () {
-        uncheck_safe($(this));
-    });
+	$("input[data-uncheck-safe]").each(function () {
+		uncheck_safe($(this));
+	});
 });
 $("body").on("change","input[data-uncheck-safe]",function () {
-    uncheck_safe($(this));
+	uncheck_safe($(this));
 });
 
 function uncheck_safe(v) {
@@ -367,19 +290,19 @@ function uncheck_safe(v) {
 		$(v).removeAttr("data-name-safe");
 	}
 
-    var name = $(v).attr("name");
+	var name = $(v).attr("name");
 
-    var name_wo_special = name.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
-    $(v).parents('label').next("input.uncheck-safe[name='" + name_wo_special + "']").remove();
+	var name_wo_special = name.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+	$(v).parents('label').next("input.uncheck-safe[name='" + name_wo_special + "']").remove();
 
-    if ($(v).is(":checked")) {
+	if ($(v).is(":checked")) {
 
-    } else {
-        $('<input class="uncheck-safe" type="hidden" name="' + name + '" value="0">').insertAfter($(v).parents("label"));
+	} else {
+		$('<input class="uncheck-safe" type="hidden" name="' + name + '" value="0">').insertAfter($(v).parents("label"));
 
 		$(v).attr("data-name-safe",name);
 		$(v).removeAttr("name");
-    }
+	}
 }
 
 
@@ -786,4 +709,7 @@ $("body").on("click", ".ffx-round-icon--delete", function(){
 	return false;
 });
 
+
+
+// end of the autoinvoked function that defines $
 }(jQuery));
