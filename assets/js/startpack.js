@@ -1,82 +1,29 @@
-(function($) {
-//autocentrage vertical en javascript
-$(document).ready(function() {
-	vert_center();
-});
-$(window).on("load",function() {
-	vert_center();
-});
-function vert_center(){
-	$(".vert_center").each(function(k, v) {
-		var haut_par = $(v).parent().actual("height");
-		var haut = $(v).actual("height");
 
-		$(this).attr("data-haut_par",haut_par);
-		$(this).attr("data-haut",haut);
+//////////////////////////////////////////////////////////////////////////////////////
+// Fast scroll to
+//////////////////////////////////////////////////////////////////////////////////////
+$("[data-fast-scroll-cmd]").click(function(){
+	var id = $(this).attr("data-fast-scroll-cmd");
+	var target = $("[data-fast-scroll-target="+id+"]");
+	var exclusion = $("[data-fast-scroll-exclusion="+id+"]").outerHeight();
+	if(exclusion){
+		//test if exclusion is not null,undefined,NaN,empty string,0,false
+	}else {
+		exclusion = 0;
+	}
 
-		var decalage = (haut_par - haut) / 2;
+	var offset = target.offset();
+	offset = offset.top - exclusion;
 
-		if($(this).is(".perc")){
-			decalage = decalage/haut_par*100;
-			$(v).css("top", decalage+"%");
-		}else{
-			$(v).css("top", decalage);
-		}
-	});
-}
+	$('html,body').animate({scrollTop: offset}, 500);
 
-
-
-
-
-
-
-
-
-//egaliser la hauteur de diff�rents blocks
-$(document).ready(function() {
-	equalize_height_recon();
-	equalize_height_do();
-});
-$(window).resize(function() {
-	equalize_height_do();
+	return false;
 });
 
-var ids_to_equa = [];
-function equalize_height_recon(){
-	$("[data-equalize-height]").each(function(){
-		if ($.inArray($(this).attr("data-equalize-height"), ids_to_equa) != -1){
 
-		}else{
-			ids_to_equa.push($(this).attr("data-equalize-height"));
-		}
-	});
-}
-
-function equalize_height_do(){
-	ids_to_equa.forEach(function(name) {
-		var temp_height = 0;
-		$("[data-equalize-height="+name+"]").removeAttr("style");
-
-		$("[data-equalize-height="+name+"]").each(function(){
-			if($(this).height() > temp_height){
-				temp_height = $(this).height();
-			}
-		});
-		$("[data-equalize-height="+name+"]").height(temp_height);
-	});
-}
-
-
-
-
-
-
-
-
-
-
-//propager un lien vers son parent/ancetre
+//////////////////////////////////////////////////////////////////////////////////////
+// Propagate link to parent
+//////////////////////////////////////////////////////////////////////////////////////
 $("body").on("click",".expend",function(e){
 	if($(e.target).hasClass("link_block")){
 
@@ -98,11 +45,9 @@ $("body").on("click",".expend",function(e){
 });
 
 
-
-
-
-
-//systeme autopopup
+//////////////////////////////////////////////////////////////////////////////////////
+// Autopopup
+//////////////////////////////////////////////////////////////////////////////////////
 $("body").on("click",".autopopup .close",function(){
 	close_popup($(this).parents(".autopopup"));
 });
@@ -158,25 +103,12 @@ function show_popup(id){
 		popup.fadeIn();
 	}
 }
-//idea: un syst�me d'autinjection d'iframe est trouvable dans le monjquery d'alliance
+//idea: un systeme d'autinjection d'iframe est trouvable dans le monjquery d'alliance
 
 
-
-
-
-//rowing
-$(document).ready(function() {
-	$("rowing tr:nth-child(even) td").addClass("odd");
-});
-
-
-
-
-
-
-
-// ascenseur lift avec scroll scrollTop
-// Le conteneur doit avoir une hauteur fix�e afin de ne pas bouger quand on lui retire ses enfants
+//////////////////////////////////////////////////////////////////////////////////////
+// Lift (when scrolltop is bigger...)
+//////////////////////////////////////////////////////////////////////////////////////
 function lift_shopping(){
 	if($(".lift_pusher").length > 0){
 		var lift_pusher = $(".lift_pusher").outerHeight();
@@ -184,6 +116,7 @@ function lift_shopping(){
 		var lift_pusher = 0;
 	}
 
+	// content_lift must have a fixed height to not move when children are moved
 	if($(".content_lift").length > 0 && $(window).scrollTop() > ($(".content_lift").offset().top-lift_pusher)){
 		$(".lift").addClass("fixed");
 	}else{
@@ -198,12 +131,9 @@ $(window).scroll(function() {
 });
 
 
-
-
-
-
-
-//parallax
+//////////////////////////////////////////////////////////////////////////////////////
+// Parallax
+//////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
 	parallax_move();
 });
@@ -230,12 +160,9 @@ function parallax_move(){
 }
 
 
-
-
-
-
-
-// survol des icones infos
+//////////////////////////////////////////////////////////////////////////////////////
+// Infos icon hover
+//////////////////////////////////////////////////////////////////////////////////////
 $("i.icon-info-sign").hover(
 	function(){
 		$("body").append('<div id="qtip_nike"></div>');
@@ -252,102 +179,9 @@ $("i.icon-info-sign").hover(
 );
 
 
-
-
-
-
-
-
-// FONCTION TAKE_THE_REST qui donne la hauteur disponible restante � un block
-$(document).ready(function () {
-    take_the_rest();
-});
-$(window).resize(function () {
-    take_the_rest();
-});
-$(window).on("load",function () {
-    take_the_rest();
-});
-function take_the_rest() {
-    if ($(".take_the_rest").length >= 1) {
-        $(".take_the_rest").each(function (k, v) {
-
-            var hparent = $(v).parent().height();
-            var off_item = $(v).position().top;
-
-			if($(v).is(".full")){
-				$(v).height(hparent);
-			}else{
-				$(v).height(hparent - off_item);
-			}
-
-        });//each
-    }//if
-}//function take_the_rest
-
-
-
-
-
-
-
-//FAST SCROLL TO
-$("[data-fast-scroll-cmd]").click(function(){
-	var id = $(this).attr("data-fast-scroll-cmd");
-	var target = $("[data-fast-scroll-target="+id+"]");
-	var exclusion = $("[data-fast-scroll-exclusion="+id+"]").outerHeight();
-	if(exclusion){
-		//test if exclusion is not null,undefined,NaN,empty string,0,false
-	}else {
-		exclusion = 0;
-	}
-	console.log(exclusion);
-
-	var offset = target.offset();
-	offset = offset.top - exclusion;
-	console.log(offset);
-
-	$('html,body').animate({scrollTop: offset}, 500);
-
-	return false;
-});
-
-
-
-
-
-
-
-
-
-
-//mobile menu classique
-$("#mobile_menu .navbar li>span, #mobile_menu .navbar li>a").click(function () {
-    var item = $(this).closest("li");
-
-	if(item.children(".submenu").length > 0){
-		if (item.is(".open")) {
-			item.removeClass("open");
-		} else {
-			item.addClass("open");
-		}
-		return false;
-	}
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-//AUTOLOADER
+//////////////////////////////////////////////////////////////////////////////////////
+// Autoloader
+//////////////////////////////////////////////////////////////////////////////////////
 function autoloader(cmd){
 	if(cmd=="start"){
 		if($("#autoloader").length == 0){
@@ -358,4 +192,59 @@ function autoloader(cmd){
 		$("#autoloader").fadeOut();
 	}
 }
-}(jQuery));
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// Mobilemenu
+//////////////////////////////////////////////////////////////////////////////////////
+$("body").on("click",".autopopup .close",function() {
+	close_popup($(this).parents(".autopopup"));
+});
+
+// Close by cross
+$("[data-stp-menu-close]").on("click", function() {
+	var menu = $(this).closest("[data-stp-menu]");
+
+	close_stp_menu(menu);
+	return false;
+});
+
+// Close by mask click
+$("body").on("click","#stp-sidemenu-mask",function() {
+	var menu = $(".stp-menu-open");
+
+	close_stp_menu(menu);
+});
+
+// Open by button
+$("[data-stp-menu-open]").click(function() {
+	var id_menu = $(this).attr("data-stp-menu-open");
+
+	show_stp_menu(id_menu);
+	return false;
+});
+
+function show_stp_menu(id){
+
+	var menu = $("[data-stp-menu=" + id + "]");
+
+	if($("#stp-sidemenu-mask").length > 0) {
+		// stp-sidemenu-mask already created
+	} else {
+		$("body").prepend("<div id='stp-sidemenu-mask'></div>");
+	}
+
+	// open the menu by a class
+	menu.addClass("stp-menu-open");
+
+	// Fade IN stp-sidemenu-mask
+	$("#stp-sidemenu-mask").fadeIn();
+}
+
+function close_stp_menu(menu){
+	// Close the menu by removing a class
+	menu.removeClass("stp-menu-open");
+
+	// Fade OUT stp-sidemenu-mask
+	$("#stp-sidemenu-mask").fadeOut();
+}

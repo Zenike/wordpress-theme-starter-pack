@@ -65,7 +65,7 @@ display: none;
 	&.w500 .hor_wrapper {width: 500px;left: -250px;}
 	&.w600 .hor_wrapper {width: 600px;left: -300px;}
 	&.w700 .hor_wrapper {width: 700px;left: -350px;}
-	&.w800 .hor_wrapper .hor_wrapper {width: 800px;left: -400px;}
+	&.w800 .hor_wrapper {width: 800px;left: -400px;}
 	&.w900 .hor_wrapper {width: 900px;left: -450px;}
 	&.w1000 .hor_wrapper {width: 1000px;left: -500px;}
 	.vert_wrapper {
@@ -305,97 +305,15 @@ display: block;
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
-
-
-
-
-
-
-
-#mobile_menu {
-	.navbar {
-		>li {
-			&:first-child a, &:first-child span {
-			border-top: 0;
-			}
-			>a, >span {
-			border-top: 1px solid @bd;
-			display: block;
-			padding: 20px 5px;
-			font-size: 18px;
-			color: @t;
-			margin: 0 15px;
-				i {
-				font-size: 30px;
-				vertical-align: middle;
-				}
-				i.down {
-				float: right;
-				font-size: 24px;
-				}
-			}
-			>span::selection { background: transparent; }
-			>span::-moz-selection { background: transparent; }
-		}
-	}
-	li.open {
-		>a, >span {
-		color: @mobile_menu;
-			i.down {
-			color: @theme;
-			}
-		}
-		>.submenu {
-		display: block;
-		}
-	}
-	.submenu {
-	background-color: @mobile_menu;
-	display: none;
-		>li {
-			&:first-child a, &:first-child span {
-			border-top: 0;
-			}
-			>a, >span {
-			border-top: 1px solid #fff;
-			display: block;
-			padding: 15px 5px;
-			font-size: 16px;
-			color: #fff;
-			margin: 0 15px;
-				i.down {
-				color: #fff;
-				}
-			}
-		}
-		.submenu {
-		border-top: 1px solid #fff;
-		background-color: darken(@mobile_menu, 10%);
-			>li {
-				>a, >span {
-				font-size: 14px;
-				}
-			}
-		}
-	}
-	.social {
-	text-align: center;
-	margin: 15px;
-		li {
-		display: inline-block;
-		margin: 5px;
-			a {
-			font-size: 30px;
-			color: @theme;
-				&:hover {
-				color: darken(@theme,20%);
-				}
-			}
-		}
-	}
+#stp-sidemenu-mask {
+z-index: 499;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: fade(#000,50%);
+display: none;
 }
