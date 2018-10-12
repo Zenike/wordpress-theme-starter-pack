@@ -1,8 +1,35 @@
+
 .clear {
 display: block;
 clear: both;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////
+
+.placeholder(@color) {
+	&::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: @color;
+	opacity: 0.8;
+	}
+	&:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: @color;
+	opacity: 0.8;
+	}
+	&::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: @color;
+	opacity: 0.8;
+	}
+	&:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: @color;
+	opacity: 0.8;
+	}
+	&::-ms-input-placeholder { /* Microsoft Edge */
+	color: @color;
+	opacity: 0.8;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 #autoloader {
 position: fixed;
@@ -23,6 +50,7 @@ display: none;
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////////////////
 
 .autopopup {
 background-color: fade(#000,80%);
@@ -105,96 +133,6 @@ display: none;
 		font-size: 20px;
 		}
 	}
-	.popup_title {
-	border-bottom: 1px solid @bd;
-	padding-bottom: 8px;
-	padding-top: 3px;
-	font-size: 14px;
-	font-weight: bold;
-	margin-bottom: 10px;
-	color: @theme;
-	padding-right: 20px;
-	}
-	.popup_buttons {
-	overflow: hidden;
-		.left,.right {
-		float: left;
-		width: 50%;
-			&.right>* {
-			float: left;
-			margin-left: 2px;
-			}
-			&.left>* {
-			float: right;
-			margin-right: 2px;
-			}
-		}
-	}
-	.popup_iframe {
-		iframe {
-		display: block;
-		width: 100%;
-		height: 100%;
-		}
-	}
-	.popup_cancel,.popup_validate {
-	padding: 7px;
-	min-width: 100px;
-	text-align: center;
-	font-size: 12px;
-	color: #fff;
-	background-color: #666;
-	cursor: pointer;
-	margin-top: 20px;
-	margin-bottom: 5px;
-	border: none;
-		&:hover {
-		background-color: #000 !important;
-		}
-		&.popup_validate {
-		background-color: @theme;
-		}
-		&.big_icons_mode {
-		font-weight: bold;
-		float: none !important;
-		display: block;
-			i {
-			display: block;
-			font-size: 50px;
-			text-align: center;
-			margin-bottom: 10px;
-			}
-		}
-	}
-	&.fullscreen_mode {
-		.center_wrapper {
-		top: 3%;
-		left: 3%;
-		width: 94%;
-		height: 94%;
-		}
-		.hor_wrapper, .vert_wrapper, .margin_wrapper, .content_wrapper>iframe {
-		position: absolute;
-		top: 0%;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: #fff;
-		border: none;
-		}
-		.content_wrapper {
-		margin: 0 !important;
-		position: absolute;
-		top: 5%;
-		left: 1%;
-		width: 98%;
-		height: 94%;
-		}
-		.cross {
-		top: -25px;
-		right: 10px;
-		}
-	}
 @media all and (max-width:1050px){
 	&.w1000 {
 		.hor_wrapper {width: 900px;left: -450px;}
@@ -230,23 +168,9 @@ display: none;
 		.hor_wrapper {width: 300px;left: -150px;}
 	}
 }
-}/* popup */
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//////////////////////////////////////////////////////////////////////////////////////
 
 .block-ratio-custom, .block-3-2, .block-16-9, .block-4-3, .block-square {
 display: block;
