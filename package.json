@@ -12,6 +12,9 @@
     "startpack": "*",
     "sliker": "*"
   },
+  "devDependencies": {
+    "laravel-mix": "^6.0.49"
+  },
   "author": "Zenike",
   "license": "ISC"
 }
